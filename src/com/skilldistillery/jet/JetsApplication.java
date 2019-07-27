@@ -1,5 +1,6 @@
 package com.skilldistillery.jet;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,17 +39,44 @@ public class JetsApplication {
 				break;
 			case 2:
 				List<Jet> flying = ai.loadAircrafts();
-				System.out.println(flying.size());
+//				System.out.println(flying.size());
 				for (Jet jet : flying) {
+					System.out.println(); 
 					jet.fly();
 				}
 
 				break;
 			case 3:
+				List<Jet> speed = ai.loadAircrafts();
+				int fast = 0;
+				int cur2 = 0;
+				for (Jet jet : speed) {
+					if(jet.getSpeed()> fast) {
+						fast = (int) jet.getSpeed();
+					}
+				}
+				for (Jet jet : speed) {
+					if(jet.getSpeed() == fast) {
+						System.out.println(jet.toString());
+					}
+					
+				}
 				// View fastest jet
 				break;
 			case 4:
-				// View jet with longest range
+				List<Jet> ranger = ai.loadAircrafts();
+				int range = 0;
+				for (Jet jet : ranger) {
+					if(jet.getRange()> range) {
+						range = (int) jet.getRange();
+					}
+				}
+				for (Jet jet : ranger) {
+					if(jet.getRange() == range) {
+						System.out.println(jet.toString());
+					}
+					
+				}
 				break;
 			case 5:
 				// load all cargo jets
@@ -104,8 +132,19 @@ public class JetsApplication {
 		}
 	}
 	public void removeJets() {
+	int cur = 0;
+		List<Jet> flying = ai.loadAircrafts();
+		for (Jet jet : flying) {
+			System.out.println("["+cur+"]");
+			jet.toRemove();
+			cur++;
+		}
 		System.out.println("Removing Jet - Input Order parameters : ");
-		List<Jet> rem = ai.loadAircrafts();
+		System.out.println("Choose which Jet to Remove using # :");
+		int r = kb.nextInt();
+		flying.remove(r);
+		
 	}
+	
 	
 }// class

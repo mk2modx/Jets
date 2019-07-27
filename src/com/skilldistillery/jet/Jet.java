@@ -15,8 +15,8 @@ public void fly() {
 	
 }
 public void toRemove() {
-	int counter = 1;
-	System.out.println(counter + " " + this.model );
+
+	System.out.println( " " + this.model );
 	
 	
 }
