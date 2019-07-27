@@ -41,7 +41,7 @@ public class JetsApplication {
 				List<Jet> flying = ai.loadAircrafts();
 //				System.out.println(flying.size());
 				for (Jet jet : flying) {
-					System.out.println(); 
+					System.out.println();
 					jet.fly();
 				}
 
@@ -51,15 +51,15 @@ public class JetsApplication {
 				int fast = 0;
 				int cur2 = 0;
 				for (Jet jet : speed) {
-					if(jet.getSpeed()> fast) {
+					if (jet.getSpeed() > fast) {
 						fast = (int) jet.getSpeed();
 					}
 				}
 				for (Jet jet : speed) {
-					if(jet.getSpeed() == fast) {
+					if (jet.getSpeed() == fast) {
 						System.out.println(jet.toString());
 					}
-					
+
 				}
 				// View fastest jet
 				break;
@@ -67,30 +67,40 @@ public class JetsApplication {
 				List<Jet> ranger = ai.loadAircrafts();
 				int range = 0;
 				for (Jet jet : ranger) {
-					if(jet.getRange()> range) {
+					if (jet.getRange() > range) {
 						range = (int) jet.getRange();
 					}
 				}
 				for (Jet jet : ranger) {
-					if(jet.getRange() == range) {
+					if (jet.getRange() == range) {
 						System.out.println(jet.toString());
 					}
-					
+
 				}
 				break;
 			case 5:
-				// load all cargo jets
+				List<Jet> cargo = ai.loadAircrafts();
+				for (Jet jet : cargo) {
+					if (jet instanceof Cargo) {
+						System.out.println(jet.toString());
+						System.out.println("Loading Cargo.");
+					}
+				}
 				break;
 			case 6:
-				// dogfight!
+				List<Jet> fight = ai.loadAircrafts();
+				for (Jet jet : fight) {
+					if(jet instanceof Combat) {
+						System.out.println(jet.toString());
+						System.out.println("Fighting..we're fighting.");
+					}
+				}
+
 				break;
 			case 7:
 				addJets();
 				break;
 			case 8:
-//				for (Jet jet : flying) {
-//					jet.toRemove();
-//				}
 
 				removeJets();
 				break;
@@ -131,11 +141,12 @@ public class JetsApplication {
 			ai.parkPlane(p);
 		}
 	}
+
 	public void removeJets() {
-	int cur = 0;
+		int cur = 0;
 		List<Jet> flying = ai.loadAircrafts();
 		for (Jet jet : flying) {
-			System.out.println("["+cur+"]");
+			System.out.println("[" + cur + "]");
 			jet.toRemove();
 			cur++;
 		}
@@ -143,8 +154,7 @@ public class JetsApplication {
 		System.out.println("Choose which Jet to Remove using # :");
 		int r = kb.nextInt();
 		flying.remove(r);
-		
+
 	}
-	
-	
+
 }// class
