@@ -13,7 +13,7 @@ public class FighterJet extends Jet implements Combat{
 		super();
 	}
 
-	public FighterJet(String model, double speed, int range, double price) {
+	public FighterJet(String model, double speed, int range, long price) {
 		super(model, speed, range, price);
 	}
 

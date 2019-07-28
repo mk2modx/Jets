@@ -9,8 +9,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Airfield<Jets> {
-//	String fileName = "names.txt";
-
 	List<Jet> jets = new ArrayList<>();
 	public Airfield() {
 		getAircrafts();
@@ -19,9 +17,7 @@ public class Airfield<Jets> {
 		List<Jet> tJets = jets;
 		return tJets;
 	}
-
 	public List<Jet> getAircrafts() {
-
 		try (BufferedReader bufIn = new BufferedReader(new FileReader("names.txt"))) {
 			String line;
 			while ((line = bufIn.readLine()) != null) {
@@ -41,14 +37,12 @@ public class Airfield<Jets> {
 					PassengerJet p = new PassengerJet(name,speed,range,price);
 					jets.add(p);
 				}
-
 			}
 		} catch (Exception e) {
 			System.err.println(e);
 		}
 		return jets;
 	}
-	
 	public void parkPlane(Jet j) {
 		jets.add(j);
 	}

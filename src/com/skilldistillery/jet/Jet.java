@@ -5,7 +5,7 @@ public abstract class Jet {
 private String model;
 private double speed;
 private int range;
-private double price;
+private long price;
 
 
 public void fly() {
@@ -30,7 +30,7 @@ public double getSpeedInMach() {
 public Jet () {
 	
 }
-public Jet(String model, double speed, int range, double price) {
+public Jet(String model, double speed, int range, long price) {
 	super();
 	this.model = model;
 	this.speed = speed;
@@ -58,7 +58,7 @@ public void setRange(int range) {
 public double getPrice() {
 	return price;
 }
-public void setPrice(double price) {
+public void setPrice(long price) {
 	this.price = price;
 }
 @Override

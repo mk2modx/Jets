@@ -1,6 +1,5 @@
 package com.skilldistillery.jet;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,43 +12,41 @@ public class JetsApplication {
 		JetsApplication jt = new JetsApplication();
 		jt.displayUserMenu();
 	}// main
-		// +JetsApplication() ???
 
 	public void displayUserMenu() {
 		boolean isRunning = true;
 		int orders = 0;
-		do {
-			System.out.println("               ~~WELCOME TO THE AIRFIELD~~");
-			System.out.println("                  ~~Command Center~~");
-			System.out.println();
-			System.out.println(" [1] List fleet       [2] Fly all jets         [3] View fastest jet");
-			System.out.println();
-			System.out.println(" [4] View jet with longest range               [5] Load all Cargo Jets     ");
-			System.out.println();
-			System.out.println(" [[6] Dogfight!       [7] Add a jet to Fleet   [8] Remove a jet from Fleet  ");
-			System.out.println();
-			System.out.println("                            [9] Quit");
-			System.out.println();
-			System.out.println("Awaiting orders, Sir. Choose a number : ");
+		while (isRunning) {
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|                      ~~WELCOME TO THE AIRFIELD~~                           |");
+			System.out.println("|                          ~~Command Center~~                                |");
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|[1] List fleet      [2] Fly all jets         [3] View fastest jet           |");
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|[4] View jet with longest range              [5] Load all Cargo Jets        |");
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|[6] Dogfight!       [7] Add a jet to Fleet   [8] Remove a jet from Fleet    |");
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|[9] List Passenger Jets                      [10] Quit                      |");
+			System.out.println("|----------------------------------------------------------------------------|");
+			System.out.println("|            Awaiting orders, Sir. Choose an option :                        |");
+			System.out.println("|----------------------------------------------------------------------------|");
 			orders = kb.nextInt();
 			switch (orders) {
 			case 1:
+				System.out.println("Total planes available for mobilization.");
 				ai.displayPlanes();
-
 				break;
 			case 2:
 				List<Jet> flying = ai.loadAircrafts();
-//				System.out.println(flying.size());
 				for (Jet jet : flying) {
 					System.out.println();
 					jet.fly();
 				}
-
 				break;
 			case 3:
 				List<Jet> speed = ai.loadAircrafts();
 				int fast = 0;
-				int cur2 = 0;
 				for (Jet jet : speed) {
 					if (jet.getSpeed() > fast) {
 						fast = (int) jet.getSpeed();
@@ -57,11 +54,10 @@ public class JetsApplication {
 				}
 				for (Jet jet : speed) {
 					if (jet.getSpeed() == fast) {
+						System.out.println("The fastest Jet is : ");
 						System.out.println(jet.toString());
 					}
-
 				}
-				// View fastest jet
 				break;
 			case 4:
 				List<Jet> ranger = ai.loadAircrafts();
@@ -73,9 +69,9 @@ public class JetsApplication {
 				}
 				for (Jet jet : ranger) {
 					if (jet.getRange() == range) {
-						System.out.println(jet.toString());
+						System.out.println("The Jet with the longest range is : ");
+						System.out.print(jet.toString());
 					}
-
 				}
 				break;
 			case 5:
@@ -83,7 +79,7 @@ public class JetsApplication {
 				for (Jet jet : cargo) {
 					if (jet instanceof Cargo) {
 						System.out.println(jet.toString());
-						System.out.println("Loading Cargo.");
+						((Cargo) jet).loadCargo();
 					}
 				}
 				break;
@@ -92,33 +88,49 @@ public class JetsApplication {
 				for (Jet jet : fight) {
 					if(jet instanceof Combat) {
 						System.out.println(jet.toString());
-						System.out.println("Fighting..we're fighting.");
+						((Combat) jet).fight();
 					}
 				}
-
 				break;
 			case 7:
 				addJets();
+				System.out.println("Jet Added!");
 				break;
 			case 8:
-
 				removeJets();
 				break;
 			case 9:
+				List<Jet> pass = ai.loadAircrafts();
+				for (Jet jet : pass) {
+					if(jet instanceof Passenger) {
+						System.out.println(jet.toString());
+						((Passenger) jet).passage();
+					}
+				}
+				break;
+			case 10:
 				System.out.println("Aim high!!");
 				isRunning = false;
 				break;
-
+			default :
+				System.out.println("Not a valid entry.");
+				break;
 			}
-		} while (isRunning);
+		} 
 	}
-
 	public void launch() {
-
 	}
-
 	public void addJets() {
-		System.out.println("Adding Jet - Input Order parameters : ");
+		System.out.println("|---------------------------------------------------|");
+		System.out.println("|      Adding Jet - Input Order parameters :        |");
+		System.out.println("|                                                   |");
+		System.out.println("| To create a Cargo Jet inialize model with \"C\"     |");
+		System.out.println("|                                                   |");
+		System.out.println("| To create a Fighter Jet inialize model with \"F\"   |");
+		System.out.println("|                                                   |");
+		System.out.println("| To create a Commercial Jet use any other Letter   |");
+		System.out.println("|---------------------------------------------------|");
+		
 		System.out.println("Enter model :");
 		String name = kb.next();
 		System.out.println("Enter speed :");
@@ -141,17 +153,20 @@ public class JetsApplication {
 			ai.parkPlane(p);
 		}
 	}
-
 	public void removeJets() {
 		int cur = 0;
 		List<Jet> flying = ai.loadAircrafts();
 		for (Jet jet : flying) {
-			System.out.println("[" + cur + "]");
+			System.out.println("[" + cur + "] : ready for Removal.");
 			jet.toRemove();
 			cur++;
 		}
-		System.out.println("Removing Jet - Input Order parameters : ");
-		System.out.println("Choose which Jet to Remove using # :");
+		System.out.println("|-----------------------------------------------|");
+		System.out.println("|    Removing Jet - Input Order parameters :    |");
+		System.out.println("|-----------------------------------------------|");
+		System.out.println("|         Choose which Jet to Remove  :         |");
+		System.out.println("|       Enter Jet Number from " + " 0 to " + (cur - 1) + "           |");
+		System.out.println("|-----------------------------------------------|");
 		int r = kb.nextInt();
 		flying.remove(r);
 
